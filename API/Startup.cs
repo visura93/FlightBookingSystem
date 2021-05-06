@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using API.Application.Queries;
 using Domain.Aggregates.AirportAggregate;
 using FluentValidation.AspNetCore;
 using Infrastructure;
@@ -40,7 +39,6 @@ namespace API
                 Configuration["Database:ConnectionString"],
                 typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
 
-            services.AddScoped<IAirportQueries, AirportQueries>();
             services.AddScoped<IAirportRepository, AirportRepository>();
         }
 
