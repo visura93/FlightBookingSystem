@@ -40,6 +40,7 @@ We like to use some modern best practices in this assignment and try to point yo
 ## Getting started
 
 - Start the Postgres database with `docker-compose up -d` (the application is already configured properly, but if you want to connect to the db directly you can see the credentials in the `docker-compose.yml` file)
+- You can now run the API project and everything should work. Upon start the application will run the migrations and seed data to the database.
 
 ## References 
 
