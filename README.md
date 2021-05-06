@@ -8,7 +8,8 @@ We like to use some modern best practices in this assignment and try to point yo
 
 - Apply the following practices throughout the project
     - Domain Driven Design
-    - CQRS (Using [MediatR](https://github.com/jbogard/MediatR))
+    - CQRS
+    - Mediator pattern (Using [MediatR](https://github.com/jbogard/MediatR))  
     - Persistence ignorance
     - SOLID
 - An API that can
