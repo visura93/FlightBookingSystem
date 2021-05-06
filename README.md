@@ -16,7 +16,8 @@ We like to use some modern best practices in this assignment and try to point yo
         - Must show the flight details
         - Must show the lowest price for each found flight
     - Build up an order
-        - Must be able to fill the order with all details, while still in draft state
+        - Must use the Ordering domain (`Domain/Aggregates/OrderAggregate/`)
+        - Must be able to fill the order with the (just the necessary) details, while still in draft state
     - Confirm an order
         - Must be able to confirm the order
 - Business logic
