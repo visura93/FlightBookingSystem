@@ -27,7 +27,7 @@ We like to use some modern best practices in this assignment and try to point yo
     - The project must be runnable on MacOS and Windows
     - If there are additional steps for us to take to run it, please write them down
 
-> **Do not worry** if you are not familiar, or a struggling with one or more of the requirements. Just do the best you can. Not being able to fulfill all requirements does not mean you "failed".
+> **Do not worry** if you are not familiar, or are struggling with one or more of the requirements. Just do the best you can. Not being able to fulfill all requirements does not mean you "failed".
 > 
 > This assignment is intended to be a conversation starter. We would still love to see your solution, even if you were not able to fulfill all requirements! We will discuss the assignment afterwards, so there's always the opportunity to explain the decisions made
 
