@@ -18,24 +18,12 @@ We like to use some modern best practices in this assignment and try to point yo
           - Departure datetime
           - Arrival datetime
           - Lowest Price
-    - **Feature 2**: Add customers
-        - Add API endpoints that creates and gets customers
-        - A customer has
-          - ID
-          - First name
-          - Last name
-          - Date of birth
-        - The order has a reference to the customer id
-    - **Feature 3**: Placing an order
+    - **Feature 2**: Placing an order
         - Must have endpoints to create an order
         - Must use the Ordering domain (`Domain/Aggregates/OrderAggregate/`)
         - Must be able to fill the order with the (just the necessary) details, while still in draft state
         - Respects the business logic
-    - **Feature 4:** Changing a flight rate price
-        - An endpoint to change the price of a flight rate
-        - When a flight rate changes, must update the order line prices as well for orders that are still in draft
-        - When an order price changes, notify the customer (fake the notification with a `Console.WriteLine`)
-    - **Feature 5**: Confirming an order
+    - **Feature 3**: Confirming an order
         - Must be able to confirm the order
         - When an order is confirmed, the any ordered rates should lower their availability by the quantity ordered
         - Notifies the customer about the confirmed order (fake the notification with a `Console.WriteLine`)
