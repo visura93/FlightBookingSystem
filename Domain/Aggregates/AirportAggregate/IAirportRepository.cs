@@ -4,7 +4,7 @@ using Domain.SeedWork;
 
 namespace Domain.Aggregates.AirportAggregate
 {
-    public interface IAirportRepository : IRepository<Airport>
+    public interface IorderRepository : IRepository<Airport>
     {
         Airport Add(Airport airport);
 

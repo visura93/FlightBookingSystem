@@ -67,5 +67,17 @@ namespace Domain.Aggregates.FlightAggregate
 
             return rate;
         }
+        //private Flight GetAvailableFlight(DateTimeOffset departure, DateTimeOffset arrival, Guid originAirportId, Guid destinationAirportId)
+        //{
+        //    var rate = _rates.SingleOrDefault(o => o.Departure == departure);
+
+        //    if (rate == null)
+        //    {
+        //        throw new ArgumentException("This flight does not contain a rate with the provided rateId");
+        //    }
+
+        //    return rate;
+        //}
+        
     }
 }

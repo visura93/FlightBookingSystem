@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MediatR;
+using Domain.Aggregates.FlightAggregate;
+using Domain.Aggregates.OrderAggregate;
 
 namespace API
 {
@@ -39,7 +41,9 @@ namespace API
                 Configuration["Database:ConnectionString"],
                 typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
 
-            services.AddScoped<IAirportRepository, AirportRepository>();
+            services.AddScoped<IorderRepository, orderRepository>();
+            services.AddScoped<IFlightRepository, FlightRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

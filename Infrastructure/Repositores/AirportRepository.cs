@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositores
 {
-    public class AirportRepository : IAirportRepository
+    public class orderRepository : IorderRepository
     {
         private readonly FlightsContext _context;
         
@@ -15,7 +15,7 @@ namespace Infrastructure.Repositores
             get { return _context; }
         }
 
-        public AirportRepository(FlightsContext context)
+        public orderRepository(FlightsContext context)
         {
             _context = context;
         }

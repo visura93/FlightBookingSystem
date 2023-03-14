@@ -60,7 +60,7 @@ namespace API
                     {
                         try
                         {
-                            context.Database.CanConnect();
+                            //context.Database.CanConnect();
                             connected = true;
                         }
                         catch (Exception)
