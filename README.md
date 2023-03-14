@@ -22,6 +22,13 @@ This endpoint returns a list of available flights based on the search criteria.
     -   `ArrivalTimeUtc`: The arrival time in UTC format.
     -   `AvailableSeats`: The number of available seats on the flight.
 
+## Sucess Respond
+
+![1](https://user-images.githubusercontent.com/60961883/224935344-63d9245b-62b9-4a71-8b75-d1daf2c23726.JPG)
+
+## Bad Request Respond
+![2](https://user-images.githubusercontent.com/60961883/224935797-19f2d656-3606-48d8-afb4-43315aec10eb.JPG)
+
 ### Create Order
 
 This endpoint creates an order for a flight.
@@ -35,6 +42,7 @@ This endpoint creates an order for a flight.
 			  "arrivalDate": "2023-03-14T07:56:16.391Z",
 			  "orderStatus": true
         }
+	
 
 ### Confirm Order
 
