@@ -23,8 +23,10 @@ This endpoint returns a list of available flights based on the search criteria.
     -   `AvailableSeats`: The number of available seats on the flight.
 
 ## Sucess Respond
-
+### With Single Search
 ![1](https://user-images.githubusercontent.com/60961883/224935344-63d9245b-62b9-4a71-8b75-d1daf2c23726.JPG)
+### With All Search (Empty the query parameters)
+![1](https://user-images.githubusercontent.com/60961883/225351382-d74e463d-0fd8-4d60-b405-4c3e673de344.JPG)
 
 ## Bad Request Respond
 ![2](https://user-images.githubusercontent.com/60961883/224935797-19f2d656-3606-48d8-afb4-43315aec10eb.JPG)
@@ -37,12 +39,17 @@ This endpoint creates an order for a flight.
 -   **Method:** `POST`
 -   **Request Body:**
     -   {
-		       "flightNo": "string",
-			  "userName": "string",
-			  "arrivalDate": "2023-03-14T07:56:16.391Z",
-			  "orderStatus": true
+	  "flightNo": "b6f3c39b-8551-400a-8fa5-d15b3ea72d1f",
+	  "userName": "test User",
+	  "arrivalDate": "2023-03-15T15:04:22.461Z",
+	  "noOfSeats": 7		  
         }
 	
+![image](https://user-images.githubusercontent.com/60961883/225352652-7b9a2e32-3332-4ddd-8472-6f3468328a4b.png)
+#### Record in Database 
+![2](https://user-images.githubusercontent.com/60961883/225353075-662f6587-c561-4e05-9fac-d6c0809f6e61.JPG)
+
+#### Please note that in Flights table Id column is the foriegn key of Flight No in Orders table
 
 ### Confirm Order
 
@@ -51,15 +58,39 @@ This endpoint confirms an existing order.
 -   **URL:** `/OrderConfirm/OrderAggregateConfirm
 -   **Method:** `PUT`
 -   **Path Parameters:**
-    {
-			  "flightNo": "string",
-			  "userName": "string",
-			  "arrivalDate": "2023-03-14T07:56:16.391Z",
-			  "orderStatus": true
-			  "id" : "00000000000000000"
-}
+    {	
+	  "orderStatus": true,
+	  "id": "3226d215-b22c-4845-9b35-45aa462753de"
+   }
     
+![image](https://user-images.githubusercontent.com/60961883/225354210-928711a9-0606-40ab-934a-3e31c65490d3.png)
 
+#### If we confirm the order the available count will reduce in Flights table
+#### Earlier thr number of available seats were 100 and after the confirmation of 7 seats reservation, the available seats updated to 93
+![3](https://user-images.githubusercontent.com/60961883/225355160-504df8bd-733a-41b5-80c2-fecab0eee7b3.JPG)
+
+### For creation of Order table, please use following Query
+
+-- Table: public.Orders
+
+-- DROP TABLE IF EXISTS public."Orders";
+
+CREATE TABLE IF NOT EXISTS public."Orders"
+(
+    "OrderId" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "UserName" text COLLATE pg_catalog."default",
+    "ArrivalDate" date,
+    "Id" uuid,
+    "OrderStatus" boolean,
+    "NoOfSeats" integer,
+    "FlightNo" uuid,
+    CONSTRAINT "Orders_pkey" PRIMARY KEY ("OrderId")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Orders"
+    OWNER to postgres;
 
 ## How to Run
 
