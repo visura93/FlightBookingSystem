@@ -1,58 +1,101 @@
-# AcmeFlights Assignment
 
-![alt text](/acmeflights-image.jpg)
+# Flight API
 
-This repository is the starting point for our .NET assignment. You are going to create a flights booking engine. API clients should be able to search available flights and book them. **The purpose of the assignment is to see if there is a match between our problem solving and coding style**
+## Endpoints
 
-We like to use some modern best practices in this assignment and try to point you in a certain direction. But don't take it too strictly. If you are struggling with something, just let it go and shine at the parts you are more familiar with. We are not expecting everyone to know everything ;) The same is true the other way around. When you think there's a more clever solution, just do it and argue why it's better.
+### Get Available Flights
 
-## Excercise "requirements"
+This endpoint returns a list of available flights based on the search criteria.
 
-- Implement the following features:
-    - **Feature 1**: Search the available flights for a destination
-        - You can search available flights to a specific destination
-        - Does not include flights that are not available (has no rates)
-        - For each found flight show:
-          - Departure airport code
-          - Arrival airport code
-          - Departure datetime
-          - Arrival datetime
-          - Lowest Price
-    - **Feature 2**: Placing an order
-        - Must have endpoints to create an order
-        - Must use the Ordering domain (`Domain/Aggregates/OrderAggregate/`)
-        - Must be able to fill the order with the (just the necessary) details, while still in draft state
-        - Respects the business logic
-    - **Feature 3**: Confirming an order
-        - Must be able to confirm the order
-        - When an order is confirmed, the any ordered rates should lower their availability by the quantity ordered
-        - Notifies the customer about the confirmed order (fake the notification with a `Console.WriteLine`)
-        - Its not possible to make changes to a confirmed order (guarded by domain)
-- **Architecture requirements**: Apply the following practices throughout the project
-    - Domain Driven Design
-    - CQRS
-    - Mediator pattern (Using [MediatR](https://github.com/jbogard/MediatR))
-    - Persistence ignorance
-    - SOLID
-- **Other**
-    - The project must be runnable on MacOS and Windows
-    - If there are additional steps for us to take to run it, please write them down
+-   **URL:** `/Flights/Search`
+-   **Method:** `GET`
+-   **Query Parameters:**
+    -   `OriginAirportId` (required): The ID of the origin airport.
+    -   `DestinationAirportId` (required): The ID of the destination airport.
+    -   `Departure` (required): The departure date in the format of `MM/dd/yyyy`.
+    -   `Arrival` (required): The arrival date in the format of `MM/dd/yyyy`.
+-   **Response:** A list of available flights with the following properties:
+    -   `Id`: The ID of the flight.
+    -   `OriginAirportId`: The ID of the origin airport.
+    -   `DestinationAirportId`: The ID of the destination airport.
+    -   `DepartureTimeUtc`: The departure time in UTC format.
+    -   `ArrivalTimeUtc`: The arrival time in UTC format.
+    -   `AvailableSeats`: The number of available seats on the flight.
 
-> **Do not worry** if you are not familiar, or are struggling with one or more of the requirements. Just do the best you can. Not being able to fulfill all requirements does not mean you "failed".
-> 
-> This assignment is intended to be a conversation starter. We would still love to see your solution, even if you were not able to fulfill all requirements! We will discuss the assignment afterwards, so there's always the opportunity to explain the decisions made
+## Sucess Respond
+### With Single Search
+![1](https://user-images.githubusercontent.com/60961883/224935344-63d9245b-62b9-4a71-8b75-d1daf2c23726.JPG)
+### With All Search (Empty the query parameters)
+![1](https://user-images.githubusercontent.com/60961883/225351382-d74e463d-0fd8-4d60-b405-4c3e673de344.JPG)
 
-## Prerequisities
+## Bad Request Respond
+![2](https://user-images.githubusercontent.com/60961883/224935797-19f2d656-3606-48d8-afb4-43315aec10eb.JPG)
 
-- Docker Desktop
-- .NET 6 SDK
+### Create Order
 
-## Getting started
+This endpoint creates an order for a flight.
 
-- Start the Postgres database with `docker-compose up -d` (the application is already configured properly, but if you want to connect to the db directly you can see the credentials in the `docker-compose.yml` file)
-- You can now run the API project and everything should work. Upon start the application will run the migrations and seed data to the database.
+-   **URL:** `/Order/OrderAggregate`
+-   **Method:** `POST`
+-   **Request Body:**
+    -   {
+	  "flightNo": "b6f3c39b-8551-400a-8fa5-d15b3ea72d1f",
+	  "userName": "test User",
+	  "arrivalDate": "2023-03-15T15:04:22.461Z",
+	  "noOfSeats": 7		  
+        }
+	
+![image](https://user-images.githubusercontent.com/60961883/225352652-7b9a2e32-3332-4ddd-8472-6f3468328a4b.png)
+#### Record in Database 
+![2](https://user-images.githubusercontent.com/60961883/225353075-662f6587-c561-4e05-9fac-d6c0809f6e61.JPG)
 
-## References 
+#### Please note that in Flights table Id column is the foriegn key of Flight No in Orders table
 
-- https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/
-- https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/
+### Confirm Order
+
+This endpoint confirms an existing order.
+
+-   **URL:** `/OrderConfirm/OrderAggregateConfirm
+-   **Method:** `PUT`
+-   **Path Parameters:**
+    {	
+	  "orderStatus": true,
+	  "id": "3226d215-b22c-4845-9b35-45aa462753de"
+   }
+    
+![image](https://user-images.githubusercontent.com/60961883/225354210-928711a9-0606-40ab-934a-3e31c65490d3.png)
+
+#### If we confirm the order the available count will reduce in Flights table
+#### Earlier thr number of available seats were 100 and after the confirmation of 7 seats reservation, the available seats updated to 93
+![3](https://user-images.githubusercontent.com/60961883/225355160-504df8bd-733a-41b5-80c2-fecab0eee7b3.JPG)
+
+### For creation of Order table, please use following Query
+
+-- Table: public.Orders
+
+-- DROP TABLE IF EXISTS public."Orders";
+
+CREATE TABLE IF NOT EXISTS public."Orders"
+(
+    "OrderId" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "UserName" text COLLATE pg_catalog."default",
+    "ArrivalDate" date,
+    "Id" uuid,
+    "OrderStatus" boolean,
+    "NoOfSeats" integer,
+    "FlightNo" uuid,
+    CONSTRAINT "Orders_pkey" PRIMARY KEY ("OrderId")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Orders"
+    OWNER to postgres;
+
+## How to Run
+
+1.  Clone the repository.
+2.  Open the solution in Visual Studio.
+3.  Build the solution.
+4.  Run the API project.
+5.  Use the provided endpoints to interact with the API.
