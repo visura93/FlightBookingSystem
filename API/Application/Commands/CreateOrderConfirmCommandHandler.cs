@@ -2,6 +2,7 @@
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
+using System;
 
 namespace API.Application.Commands
 {
@@ -17,7 +18,7 @@ namespace API.Application.Commands
 
             public async Task<Order> Handle(CreateOrderConfirmCommand request, CancellationToken cancellationToken)
             {
-                var airport = _orderRepository.Update(new Order(request.Id,request.FlightNo, request.UserName,  request.ArrivalDate, request.OrderStatus));
+                var airport = _orderRepository.Update(new Order(request.Id, Guid.NewGuid(), null, DateTime.Now.Date, 0, request.OrderStatus));
 
                 await _orderRepository.UnitOfWork.SaveChangesAsync();
 

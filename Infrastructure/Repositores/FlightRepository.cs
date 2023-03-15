@@ -39,12 +39,34 @@ namespace Infrastructure.Repositores
         {
             return await _context.Flights.FirstOrDefaultAsync(o => o.Id == airportId);
         }
-        public  Flight GetAvailableFlight(DateTimeOffset departure, DateTimeOffset arrival, Guid originAirportId, Guid destinationAirportId)
+        public List<Flight> GetAvailableFlight(DateTimeOffset? departure, DateTimeOffset? arrival, Guid? originAirportId, Guid? destinationAirportId)
         {
-            return  _context.Flights.FirstOrDefaultAsync(o => o.DestinationAirportId == destinationAirportId && o.Departure== departure && o.Arrival == arrival && o.OriginAirportId == originAirportId).Result;
+            IQueryable<Flight> query = _context.Flights;
+
+            if (departure.HasValue)
+            {
+                query = query.Where(f => f.Departure == departure.Value);
+            }
+
+            if (arrival.HasValue)
+            {
+                query = query.Where(f => f.Arrival == arrival.Value);
+            }
+
+            if (originAirportId.HasValue)
+            {
+                query = query.Where(f => f.OriginAirportId == originAirportId.Value);
+            }
+
+            if (destinationAirportId.HasValue)
+            {
+                query = query.Where(f => f.DestinationAirportId == destinationAirportId.Value);
+            }
+
+            return query.ToList();
         }
 
-        
+
     }
 }
 

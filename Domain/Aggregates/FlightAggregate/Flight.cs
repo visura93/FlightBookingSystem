@@ -14,6 +14,7 @@ namespace Domain.Aggregates.FlightAggregate
         
         public DateTimeOffset Departure { get; private set; }
         public DateTimeOffset Arrival { get; private set; }
+        public int AvailableSeats { get;  set; }
 
         private List<FlightRate> _rates;
         public IReadOnlyCollection<FlightRate> Rates => _rates;
@@ -24,12 +25,13 @@ namespace Domain.Aggregates.FlightAggregate
         }
 
         public Flight(DateTimeOffset departure, DateTimeOffset arrival, Guid originAirportId, Guid
-            destinationAirportId) : this()
+            destinationAirportId, int availableSeats) : this()
         {
             OriginAirportId = originAirportId;
             DestinationAirportId = destinationAirportId;
             Departure = departure;
             Arrival = arrival;
+            AvailableSeats = availableSeats;
         }
 
         public void AddRate(string name, Price price, int numAvailable)

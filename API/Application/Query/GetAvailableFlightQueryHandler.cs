@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using System.Threading;
 using Domain.Aggregates.FlightAggregate;
 using System;
+using System.Collections.Generic;
 
 namespace API.Application.Query
 {
-    public class GetAvailableFlightQueryHandler : IRequestHandler<GetAvailableFlightQuery, Flight>
+    public class GetAvailableFlightQueryHandler : IRequestHandler<GetAvailableFlightQuery, List<Flight>>
     {
        
             private readonly IFlightRepository _flightRepository;
@@ -20,7 +21,7 @@ namespace API.Application.Query
 
            
 
-        public async Task<Flight> Handle(GetAvailableFlightQuery request, CancellationToken cancellationToken)
+        public async Task<List<Flight>> Handle(GetAvailableFlightQuery request, CancellationToken cancellationToken)
         {
             var airport = _flightRepository.GetAvailableFlight(request.Departure, request.Arrival, request.OriginAirportId, request.DestinationAirportId);
 

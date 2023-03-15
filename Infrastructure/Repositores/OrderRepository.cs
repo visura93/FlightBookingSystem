@@ -34,9 +34,26 @@ namespace Infrastructure.Repositores
 
             public Order Update(Order order)
             {
+            
                 var savedOrder = _context.Orders.Where(o => o.Id == order.Id).SingleOrDefault();
-                savedOrder.OrderStatus = order.OrderStatus;
-                return _context.Orders.Update(savedOrder).Entity;
+                int currentAbailableSeats= 0;
+            
+            
+                var savedFlight = _context.Flights.Where(o => o.Id == savedOrder.FlightNo).SingleOrDefault();
+           
+                currentAbailableSeats = savedFlight.AvailableSeats - savedOrder.NoOfSeats;
+                if (currentAbailableSeats > -1)
+                {
+                    savedFlight.AvailableSeats = currentAbailableSeats;
+                    var saved =_context.Flights.Update(savedFlight).Entity;
+                    savedOrder.OrderStatus = order.OrderStatus;
+                    return _context.Orders.Update(savedOrder).Entity;
+                }
+                else
+                {
+                    return new Order {  OrderStatus =false};
+                }
+                
             }
 
         }

@@ -38,7 +38,7 @@ public class FlightsController : ControllerBase
         try
         {
             var airport = await _mediator.Send(filter);
-            if (airport == null)
+            if (airport.Count == 0)
             {
                 return NotFound( "No flights available" );
             }

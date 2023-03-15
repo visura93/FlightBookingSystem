@@ -15,14 +15,15 @@ namespace Domain.Aggregates.OrderAggregate
             public string UserName { get; private set; }
             public DateTime ArrivalDate { get; private set; }
              public bool OrderStatus { get; private set; }
+             public Guid Id { get; set; }
 
         public OrderConfirm()
             {
             }
 
-            public OrderConfirm(string flightNo, string userName, DateTime arrivalDate, bool orderStatus) : this()
+            public OrderConfirm(Guid id, string flightNo, string userName, DateTime arrivalDate, bool orderStatus) : this()
             {
-
+                Id= id;
                 FlightNo = flightNo;
                 UserName = userName;
                 ArrivalDate = arrivalDate;

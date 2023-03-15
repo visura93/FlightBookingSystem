@@ -35,8 +35,14 @@ namespace API.Controllers
                 try
                 {
                     var airport = await _mediator.Send(command);
-
+                if (airport.OrderStatus == true)
+                {
                     return Ok(airport);
+                }
+                else
+                {
+                   return BadRequest("Order not placed");
+                }
                 }
                 catch
                 {

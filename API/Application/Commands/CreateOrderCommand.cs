@@ -7,19 +7,20 @@ namespace API.Application.Commands
     public class CreateOrderCommand : IRequest<Order>
     {
 
-        public string FlightNo { get; private set; }
+        public Guid FlightNo { get; private set; }
 
         public string UserName { get; private set; }
         public DateTime ArrivalDate { get; private set; }
-        public bool OrderStatus { get; private set; }
+        public int NoOfSeats { get; private set; }
+       
 
-        public CreateOrderCommand( string flightNo, string userName, DateTime arrivalDate, bool orderStatus)
+        public CreateOrderCommand(Guid flightNo, string userName, DateTime arrivalDate, int noOfSeats)
             {
                 FlightNo = flightNo;
                 UserName = userName;    
                 ArrivalDate = arrivalDate;
-                OrderStatus = orderStatus;
-               
+                NoOfSeats = noOfSeats;
+
             }
         }
  }

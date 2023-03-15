@@ -19,7 +19,7 @@ namespace API.Application.Commands
 
             public async Task<Order> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
             {
-                var airport = _orderRepository.Add(new Order(Guid.NewGuid(), request.UserName, request.FlightNo,request.ArrivalDate,request.OrderStatus));
+                var airport = _orderRepository.Add(new Order(Guid.NewGuid(), request.FlightNo, request.UserName,request.ArrivalDate , request.NoOfSeats));
 
                 await _orderRepository.UnitOfWork.SaveEntitiesAsync();
 
