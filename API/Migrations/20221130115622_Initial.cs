@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Migrations
 {
@@ -28,7 +29,8 @@ namespace API.Migrations
                     OriginAirportId = table.Column<Guid>(nullable: false),
                     DestinationAirportId = table.Column<Guid>(nullable: false),
                     Departure = table.Column<DateTimeOffset>(nullable: false),
-                    Arrival = table.Column<DateTimeOffset>(nullable: false)
+                    Arrival = table.Column<DateTimeOffset>(nullable: false),
+                    AvailableSeats= table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -46,6 +48,27 @@ namespace API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+                        migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:Identity", "1, 1")
+                    .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn)
+                    .Annotation("Sqlite:Autoincrement", true),
+                    UserName = table.Column<string>(nullable: true),
+                    ArrivalDate = table.Column<DateTimeOffset>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    OrderStatus = table.Column<bool>(nullable: true),
+                    NoOfSeats = table.Column<int>(nullable: true),
+                    FlightNo = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                });
+
+
 
             migrationBuilder.CreateTable(
                 name: "FlightRates",
@@ -101,6 +124,8 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Airports");
+            migrationBuilder.DropTable(
+               name: "Orders");
         }
     }
 }

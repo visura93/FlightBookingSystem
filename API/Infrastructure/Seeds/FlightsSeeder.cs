@@ -39,12 +39,6 @@ namespace API.Infrastructure.Seeds
                     availableSeats
                 ));
             }
-            if (FlightsContext.Orders.Any())
-            {
-                Console.WriteLine("Skipping Orders seeder because table is not empty.");
-                return;
-            };
-            FlightsContext.Orders.Add(new Order());
             FlightsContext.SaveChanges();
         }
     }
