@@ -69,28 +69,7 @@ This endpoint confirms an existing order.
 #### Earlier thr number of available seats were 100 and after the confirmation of 7 seats reservation, the available seats updated to 93
 ![3](https://user-images.githubusercontent.com/60961883/225355160-504df8bd-733a-41b5-80c2-fecab0eee7b3.JPG)
 
-### For creation of Order table, please use following Query
-
--- Table: public.Orders
-
--- DROP TABLE IF EXISTS public."Orders";
-
-CREATE TABLE IF NOT EXISTS public."Orders"
-(
-    "OrderId" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
-    "UserName" text COLLATE pg_catalog."default",
-    "ArrivalDate" date,
-    "Id" uuid,
-    "OrderStatus" boolean,
-    "NoOfSeats" integer,
-    "FlightNo" uuid,
-    CONSTRAINT "Orders_pkey" PRIMARY KEY ("OrderId")
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Orders"
-    OWNER to postgres;
+### for initialize the Database first drop all tables and in package manager console run the command "update-database"
 
 ## How to Run
 
